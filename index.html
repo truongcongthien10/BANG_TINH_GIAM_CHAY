@@ -392,7 +392,7 @@
         // D14: Tỷ lệ % tăng bất thường (%)
         let D14 = 0;
         if (D13 >= 16) {
-            D14 = D13 !== 0 ? (D4 - D13) / D13 : 0;
+            D14 = D13 !== 0 ? ((D4 - D13) / D13) : 0;
         } else {
             D14 = (D4 - 16) / 3;
         }
@@ -416,7 +416,7 @@
 
         // Cập nhật giao diện
         document.getElementById('resMucBinhQuan').innerText = formatNumberVi(D13, 2) + " m³";
-        document.getElementById('resTyLeTang').innerText = formatNumberVi(D14 * 100, 2) + " %";
+        document.getElementById('resTyLeTang').innerText = formatNumberVi(D14, 2) + " %";
         document.getElementById('resSanLuongChiaSe').innerText = formatNumberVi(D15, 2) + " m³";
         document.getElementById('resDonGia').innerText = formatNumberVi(D16, 2) + " đồng/m³";
         document.getElementById('resSanLuongThanhToan').innerText = formatNumberVi(D18, 2) + " m³";
