@@ -224,22 +224,22 @@
         <div class="grid-2">
             <div class="form-group">
                 <label for="luongNuocChay">Lượng nước chảy (m³):</label>
-                <input type="number" id="luongNuocChay" class="form-control" value="135" step="any">
+                <input type="number" id="luongNuocChay" class="form-control auto-select" value="135" step="any">
             </div>
 
             <div class="form-group">
                 <label for="mucGiamChay">Mức giảm chảy (%):</label>
-                <input type="number" id="mucGiamChay" class="form-control" value="10" step="any">
+                <input type="number" id="mucGiamChay" class="form-control auto-select" value="10" step="any">
             </div>
 
             <div class="form-group">
                 <label for="soTienThanhToan">Số tiền thanh toán (đồng):</label>
-                <input type="text" id="soTienThanhToan" class="form-control" value="1.129.822">
+                <input type="text" id="soTienThanhToan" class="form-control auto-select" value="1.129.822">
             </div>
 
             <div class="form-group">
                 <label for="chuKy">Chu kỳ tiêu thụ lịch sử:</label>
-                <select id="chuKy" class="form-control">
+                <select id="chuKy" class="form-control" onchange="calculateChiaSe()">
                     <option value="6 tháng" selected>6 tháng</option>
                     <option value="7 tháng">7 tháng</option>
                     <option value="5 tháng">5 tháng</option>
@@ -251,15 +251,15 @@
         <div class="grid-3">
             <div class="form-group">
                 <label for="ky1">Sản lượng 1 kỳ (m³):</label>
-                <input type="number" id="ky1" class="form-control" value="2" step="any">
+                <input type="number" id="ky1" class="form-control auto-select" value="2" step="any">
             </div>
             <div class="form-group">
                 <label for="ky2">Sản lượng 2 kỳ (m³):</label>
-                <input type="number" id="ky2" class="form-control" value="4" step="any">
+                <input type="number" id="ky2" class="form-control auto-select" value="4" step="any">
             </div>
             <div class="form-group">
                 <label for="ky3">Sản lượng 3 kỳ (m³):</label>
-                <input type="number" id="ky3" class="form-control" value="3" step="any">
+                <input type="number" id="ky3" class="form-control auto-select" value="3" step="any">
             </div>
         </div>
 
@@ -274,24 +274,24 @@
         <div class="result-group">
             <div class="result-row-sub">
                 <span>Mức bình quân tiêu thụ:</span>
-                <span class="val" id="resMucBinhQuan">3.00 m³</span>
+                <span class="val" id="resMucBinhQuan">3,00 m³</span>
             </div>
             <div class="result-row-sub">
                 <span>Tỷ lệ % tăng bất thường:</span>
-                <span class="val" id="resTyLeTang">39.67 %</span>
+                <span class="val" id="resTyLeTang">3.966,67 %</span>
             </div>
             <div class="result-row-sub">
                 <span>Sản lượng nước chia sẻ:</span>
-                <span class="val" id="resSanLuongChiaSe">11.90 m³</span>
+                <span class="val" id="resSanLuongChiaSe">11,9 m³</span>
             </div>
             <div class="result-row-sub">
                 <span>Đơn giá nước bình quân:</span>
-                <span class="val" id="resDonGia">8.369 đồng/m³</span>
+                <span class="val" id="resDonGia">8.369,05 đồng/m³</span>
             </div>
 
             <div class="result-container" style="margin-top: 6px;">
                 <span class="result-label">Sản lượng nước thanh toán:</span>
-                <span class="result-value" id="resSanLuongThanhToan">123.10 m³</span>
+                <span class="result-value" id="resSanLuongThanhToan">123,1 m³</span>
             </div>
 
             <div class="result-main">
@@ -303,12 +303,33 @@
 </div>
 
 <script>
-    function formatNumber(num, decimals = 2) {
+    // Tự động bôi đen (select all) khi click hoặc focus vào ô nhập
+    document.addEventListener('DOMContentLoaded', function() {
+        const autoInputs = document.querySelectorAll('.auto-select');
+        autoInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+            input.addEventListener('mouseup', function(e) {
+                // Ngăn sự kiện mouseup làm mất bôi đen khi nhấp chuột
+                e.preventDefault();
+            });
+            input.addEventListener('input', calculateChiaSe);
+        });
+    });
+
+    function formatNumberVi(num, decimals = 2) {
         if (isNaN(num) || !isFinite(num)) return "0";
-        return new Intl.NumberFormat('vi-VN', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: decimals
-        }).format(num);
+        // Format theo định dạng Việt Nam (phẩy phân cách thập phân, chấm phân cách hàng nghìn)
+        let parts = num.toFixed(decimals).split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        
+        // Bỏ các số 0 thừa ở phần thập phân nếu có
+        let formatted = parts.join(',');
+        if (decimals > 0) {
+            formatted = formatted.replace(/,0+$/, '').replace(/(,\d*?[1-9])0+$/, '$1');
+        }
+        return formatted;
     }
 
     function parseMoneyInput(valStr) {
@@ -323,10 +344,14 @@
         if (value === 0 && this.value === '') {
             this.value = '';
         } else {
-            this.value = new Intl.NumberFormat('vi-VN').format(value);
+            this.value = partsFormatted(value);
         }
         calculateChiaSe();
     });
+
+    function partsFormatted(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 
     function calculateChiaSe() {
         const D4 = parseFloat(document.getElementById('luongNuocChay').value) || 0;
@@ -376,12 +401,12 @@
         let D19 = D18 * D16;
 
         // Cập nhật giao diện
-        document.getElementById('resMucBinhQuan').innerText = formatNumber(D13, 2) + " m³";
-        document.getElementById('resTyLeTang').innerText = formatNumber(D14 * 100, 2) + " %";
-        document.getElementById('resSanLuongChiaSe').innerText = formatNumber(D15, 2) + " m³";
-        document.getElementById('resDonGia').innerText = formatNumber(D16, 2) + " đồng/m³";
-        document.getElementById('resSanLuongThanhToan').innerText = formatNumber(D18, 2) + " m³";
-        document.getElementById('resSoTienThanhToan').innerText = formatNumber(D19, 0) + " đồng";
+        document.getElementById('resMucBinhQuan').innerText = formatNumberVi(D13, 2) + " m³";
+        document.getElementById('resTyLeTang').innerText = formatNumberVi(D14 * 100, 2) + " %";
+        document.getElementById('resSanLuongChiaSe').innerText = formatNumberVi(D15, 2) + " m³";
+        document.getElementById('resDonGia').innerText = formatNumberVi(D16, 2) + " đồng/m³";
+        document.getElementById('resSanLuongThanhToan').innerText = formatNumberVi(D18, 2) + " m³";
+        document.getElementById('resSoTienThanhToan').innerText = partsFormatted(Math.round(D19)) + " đồng";
     }
 
     window.onload = calculateChiaSe;
