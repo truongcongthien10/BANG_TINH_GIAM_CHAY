@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bảng Tính Giảm Chảy Cho Khách Hàng - Mobile Edition</title>
+    <title>Bảng Tính Giảm Chảy Cho Khách Hàng - Mobile 2 Cột</title>
     <style>
         * {
             box-sizing: border-box;
@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #ffffff;
+            background-color: #f4f6f8;
             color: #222222;
             padding: 0;
             margin: 0;
@@ -26,81 +26,86 @@
             width: 100%;
             max-width: 480px;
             background-color: #ffffff;
-            border: 1px solid #2d7744;
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header xanh lá đậm giống hệt màn hình điện thoại */
+        /* Header xanh lá đậm */
         .card-header {
             background-color: #26713c;
             color: #ffffff;
-            padding: 16px 12px;
+            padding: 14px 10px;
             text-align: center;
         }
 
         .card-header h1 {
-            font-size: 19px;
+            font-size: 17px;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             line-height: 1.3;
             text-transform: uppercase;
         }
 
         .card-body {
-            padding: 14px 12px;
+            padding: 10px 10px 40px 10px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            padding-bottom: 60px; /* Tránh thanh điều hướng trình duyệt che mất nội dung */
+            gap: 10px;
         }
 
         /* Khung tiêu đề phân đoạn I và II */
         .section-box {
             background-color: #ebf3eb;
-            border-radius: 2px;
-            padding: 10px 12px;
-            margin-bottom: 2px;
+            border-radius: 4px;
+            padding: 8px 10px;
         }
 
         .section-title {
             color: #26713c;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.2px;
         }
 
-        /* Dạng danh sách xếp dọc theo hàng cho điện thoại */
-        .form-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        /* Bố trí Thông số đầu vào thành Grid 2 Cột */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 10px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 3px;
+        }
+
+        /* Dòng full chiều rộng trong grid */
+        .form-group.full-width {
+            grid-column: span 2;
         }
 
         .form-group label {
-            font-size: 14px;
+            font-size: 12.5px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: #333333;
+            line-height: 1.2;
         }
 
         .form-control {
             width: 100%;
-            height: 42px;
-            padding: 8px 12px;
-            font-size: 16px; /* Kích thước 16px để iOS không tự zoom khi gõ */
+            height: 38px;
+            padding: 6px 8px;
+            font-size: 15px; /* Giảm nhẹ font để hợp giao diện 2 cột trên màn hình nhỏ */
             font-weight: 700;
             color: #111111;
             background-color: #fafafa;
-            border: 1px solid #cfcfcf;
-            border-radius: 8px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
             outline: none;
             transition: border-color 0.2s, background-color 0.2s;
         }
@@ -116,24 +121,24 @@
             -webkit-appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-            padding-right: 36px;
+            background-position: right 8px center;
+            background-size: 14px;
+            padding-right: 26px;
         }
 
-        /* Nút bấm màu xanh dương chữ trắng dạng full-width cho Mobile */
+        /* Nút bấm màu xanh dương */
         .btn-calc {
             width: 100%;
-            height: 46px;
+            height: 42px;
             background-color: #2b74bb;
             color: #ffffff;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            margin: 6px 0 10px 0;
-            transition: background-color 0.2s, active 0.1s;
+            margin: 4px 0;
+            transition: background-color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -144,77 +149,78 @@
             transform: scale(0.99);
         }
 
-        /* Danh sách kết quả dạng hàng cho mobile */
+        /* Danh sách kết quả */
         .result-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .result-row-sub {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 12px;
+            padding: 8px 10px;
             background-color: #ffffff;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #e5e5e5;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13.5px;
         }
 
         .result-row-sub .val {
             font-weight: 700;
             color: #26713c;
-            font-size: 15px;
+            font-size: 14.5px;
         }
 
-        /* Khung nổi bật kết quả sản lượng và số tiền */
+        /* Khung nổi bật sản lượng nước thanh toán */
         .result-container {
             background-color: #ebf3eb;
             border: 1px solid #cce2cc;
-            border-left: 5px solid #26713c;
+            border-left: 4px solid #26713c;
             border-radius: 6px;
-            padding: 12px 14px;
+            padding: 10px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .result-label {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 700;
             color: #111111;
         }
 
         .result-value {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
             color: #26713c;
         }
 
+        /* Khung nổi bật Số tiền phải thanh toán - TÔ ĐỎ NỔI BẬT */
         .result-main {
-            background-color: #ebf3eb;
-            border: 1px solid #cce2cc;
-            border-left: 5px solid #26713c;
+            background-color: #fdf2f2;
+            border: 1px solid #f8d7da;
+            border-left: 5px solid #d9534f;
             border-radius: 6px;
-            padding: 14px;
+            padding: 12px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
-        .result-main .result-label {
-            font-size: 15px;
-            color: #111111;
-            font-weight: 700;
-        }
-
-        .result-main .result-value {
-            font-size: 19px;
+        .result-main .result-label-red {
+            font-size: 14.5px;
+            color: #b02a37;
             font-weight: 800;
-            color: #26713c;
+        }
+
+        .result-main .result-value-red {
+            font-size: 18px;
+            font-weight: 800;
+            color: #d9534f;
         }
     </style>
 </head>
@@ -231,7 +237,7 @@
             <div class="section-title">I. THÔNG SỐ ĐẦU VÀO</div>
         </div>
 
-        <div class="form-list">
+        <div class="form-grid">
             <div class="form-group">
                 <label for="luongNuocChay">Lượng nước chảy (m³):</label>
                 <input type="number" id="luongNuocChay" class="form-control auto-select" value="135" inputmode="decimal" step="any">
@@ -242,12 +248,12 @@
                 <input type="number" id="mucGiamChay" class="form-control auto-select" value="10" inputmode="decimal" step="any">
             </div>
 
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label for="soTienThanhToan">Số tiền thanh toán (đồng):</label>
                 <input type="text" id="soTienThanhToan" class="form-control auto-select" value="1.129.822" inputmode="numeric">
             </div>
 
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label for="chuKy">Chu kỳ tiêu thụ lịch sử:</label>
                 <select id="chuKy" class="form-control" onchange="calculateChiaSe()">
                     <option value="6 tháng" selected>6 tháng</option>
@@ -266,7 +272,7 @@
                 <input type="number" id="ky2" class="form-control auto-select" value="4" inputmode="decimal" step="any">
             </div>
 
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label for="ky3">Sản lượng 3 kỳ (m³):</label>
                 <input type="number" id="ky3" class="form-control auto-select" value="3" inputmode="decimal" step="any">
             </div>
@@ -303,16 +309,16 @@
                 <span class="result-value" id="resSanLuongThanhToan">123,1 m³</span>
             </div>
 
+            <!-- NỔI BẬT TÔ ĐỎ SỐ TIỀN KHÁCH HÀNG PHẢI THANH TOÁN -->
             <div class="result-main">
-                <span class="result-label">Số tiền khách hàng phải thanh toán:</span>
-                <span class="result-value" id="resSoTienThanhToan">1.030.230 đồng</span>
+                <span class="result-label-red">Số tiền khách hàng phải thanh toán:</span>
+                <span class="result-value-red" id="resSoTienThanhToan">1.030.230 đồng</span>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Bôi đen chọn hết văn bản khi nhấp/chạm vào ô trên điện thoại
     document.addEventListener('DOMContentLoaded', function() {
         const autoInputs = document.querySelectorAll('.auto-select');
         autoInputs.forEach(input => {
