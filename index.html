@@ -126,27 +126,39 @@
             padding-right: 26px;
         }
 
-        /* Nút bấm màu xanh dương */
+        /* Nút bấm 3D nổi bật với hiệu ứng hover / active */
         .btn-calc {
             width: 100%;
-            height: 42px;
-            background-color: #2b74bb;
+            height: 46px;
+            background: linear-gradient(135deg, #2b74bb 0%, #1f5992 100%);
             color: #ffffff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            margin: 4px 0;
-            transition: background-color 0.2s;
+            margin: 6px 0 10px 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 0 #153c65, 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.15s ease-in-out;
+            position: relative;
+            top: 0;
         }
 
+        /* Hiệu ứng đưa tay / rê chuột vào nút (Hover) */
+        .btn-calc:hover {
+            background: linear-gradient(135deg, #3884d0 0%, #256bb3 100%);
+            box-shadow: 0 6px 0 #153c65, 0 8px 15px rgba(43, 116, 187, 0.4);
+            top: -2px;
+        }
+
+        /* Hiệu ứng nhấn xuống 3D (Active / Click) */
         .btn-calc:active {
-            background-color: #1f5992;
-            transform: scale(0.99);
+            top: 2px;
+            box-shadow: 0 2px 0 #153c65, 0 3px 6px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #1f5992 0%, #153c65 100%);
         }
 
         /* Danh sách kết quả */
@@ -259,7 +271,7 @@
 
             <div class="form-group full-width">
                 <label for="chuKy">Chu kỳ tiêu thụ lịch sử:</label>
-                <select id="chuKy" class="form-control" onchange="calculateChiaSe()">
+                <select id="chuKy" class="form-control" >
                     <option value="6 tháng" selected>6 tháng</option>
                     <option value="7 tháng">7 tháng</option>
                     <option value="5 tháng">5 tháng</option>
@@ -334,7 +346,6 @@
             input.addEventListener('mouseup', function(e) {
                 e.preventDefault();
             });
-            input.addEventListener('input', calculateChiaSe);
         });
     });
 
@@ -368,7 +379,6 @@
         } else {
             this.value = partsFormatted(value);
         }
-        calculateChiaSe();
     });
 
     function calculateChiaSe() {
