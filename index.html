@@ -3,86 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tính toán giảm chảy 2026</title>
+    <title>Bảng Tính Giảm Chảy Cho Khách Hàng - 2026</title>
     <style>
-        :root {
-            --primary-color: #1e3a8a;
-            --primary-hover: #1d4ed8;
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --accent-bg: #eff6ff;
-            --success-color: #15803d;
-            --success-bg: #f0fdf4;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 24px 16px;
+            background-color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
-        .container {
+        .card {
             width: 100%;
-            max-width: 850px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            max-width: 650px;
+            background-color: #ffffff;
+            border: 2px solid #007a3d;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 28px 32px;
+        .card-header {
+            background-color: #007a3d;
+            color: #ffffff;
+            padding: 14px;
             text-align: center;
         }
 
-        .header h1 {
-            font-size: 22px;
-            font-weight: 700;
+        .card-header h1 {
+            font-size: 19px;
+            font-weight: bold;
             letter-spacing: 0.5px;
-            text-transform: uppercase;
         }
 
-        .content {
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
+        .card-body {
+            padding: 20px;
+        }
+
+        .section-box {
+            background-color: #ebf4e8;
+            border-bottom: 1px solid #b2d8b2;
+            padding: 8px 12px;
+            margin-bottom: 16px;
         }
 
         .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary-color);
+            color: #004d25;
+            font-size: 15px;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--accent-bg);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
         }
 
         .form-group {
@@ -93,261 +90,219 @@
 
         .form-group label {
             font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
+            font-weight: bold;
+            color: #222222;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 14px;
+            padding: 8px 12px;
             font-size: 15px;
-            font-weight: 600;
-            color: var(--text-main);
-            background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            font-weight: bold;
+            color: #000000;
+            background-color: #fafafa;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
             outline: none;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s;
         }
 
         .form-control:focus {
-            background-color: #fff;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            border-color: #007a3d;
+            background-color: #ffffff;
         }
 
         select.form-control {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2064748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-            padding-right: 36px;
+            background-position: right 10px center;
+            background-size: 14px;
+            padding-right: 30px;
         }
 
-        .unit {
-            position: absolute;
-            right: 12px;
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-            pointer-events: none;
+        .btn-calc {
+            width: 100%;
+            background-color: #0072bc;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.2s;
         }
 
-        .history-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+        .btn-calc:hover {
+            background-color: #005a96;
         }
 
-        @media (max-width: 600px) {
-            .history-grid {
-                grid-template-columns: 1fr;
-            }
+        .result-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .result-card {
-            background-color: var(--accent-bg);
-            border: 1px solid #dbeafe;
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .result-row {
+        .result-row-sub {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px dashed #cbd5e1;
+            padding: 6px 12px;
+            background-color: #f8faf8;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
         }
 
-        .result-row:last-child {
-            border-bottom: none;
+        .result-row-sub .val {
+            font-weight: bold;
+            color: #004d25;
+        }
+
+        .result-container {
+            background-color: #ebf4e8;
+            border: 1px solid #d0e6cf;
+            border-left: 5px solid #007a3d;
+            border-radius: 4px;
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .result-label {
             font-size: 14px;
-            color: #334155;
-            font-weight: 500;
+            font-weight: bold;
+            color: #111111;
         }
 
         .result-value {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-size: 18px;
+            font-weight: bold;
+            color: #007a3d;
         }
 
-        .highlight-box {
-            background-color: var(--success-bg);
-            border: 1px solid #bbf7d0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 8px;
-        }
-
-        .highlight-row {
+        .result-main {
+            background-color: #e6f4ea;
+            border: 1px solid #b2d8b2;
+            border-left: 5px solid #007a3d;
+            border-radius: 4px;
+            padding: 14px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-top: 4px;
         }
 
-        .highlight-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .highlight-label {
+        .result-main .result-label {
             font-size: 15px;
-            font-weight: 700;
-            color: #14532d;
+            color: #004d25;
         }
 
-        .highlight-value {
+        .result-main .result-value {
             font-size: 20px;
-            font-weight: 800;
-            color: var(--success-color);
-        }
-
-        .footer-note {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 12px;
-            font-style: italic;
+            color: #007a3d;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>Bảng Tính Giảm Chảy Cho Khách Hàng</h1>
+<div class="card">
+    <div class="card-header">
+        <h1>BẢNG TÍNH GIẢM CHẢY CHO KHÁCH HÀNG</h1>
     </div>
 
-    <div class="content">
-        <!-- NHẬP SỐ LIỆU -->
-        <div class="section">
-            <div class="section-title">
-                <span>1. Nhập thông tin số liệu</span>
-            </div>
-            
-            <div class="grid-2" style="margin-bottom: 20px;">
-                <div class="form-group">
-                    <label for="luongNuocChay">Lượng nước chảy</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="luongNuocChay" class="form-control" value="135" min="0" step="any" style="padding-right: 45px;">
-                        <span class="unit">m³</span>
-                    </div>
-                </div>
+    <div class="card-body">
+        <!-- I. THÔNG SỐ ĐẦU VÀO -->
+        <div class="section-box">
+            <div class="section-title">I. THÔNG SỐ ĐẦU VÀO</div>
+        </div>
 
-                <div class="form-group">
-                    <label for="mucGiamChay">Mức giảm chảy</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="mucGiamChay" class="form-control" value="10" min="0" max="100" step="any" style="padding-right: 45px;">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-
-                <div class="form-group" style="grid-column: span 1 / -1;">
-                    <label for="soTienThanhToan">Số tiền thanh toán hóa đơn</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="soTienThanhToan" class="form-control" value="1.129.822" style="padding-right: 60px;">
-                        <span class="unit">đồng</span>
-                    </div>
-                </div>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="luongNuocChay">Lượng nước chảy (m³):</label>
+                <input type="number" id="luongNuocChay" class="form-control" value="135" step="any">
             </div>
 
-            <!-- BÌNH QUÂN TIÊU THỤ -->
-            <div class="form-group" style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <label>Bình quân tiêu thụ lịch sử</label>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Chu kỳ tính:</span>
-                        <select id="chuKy" class="form-control" style="width: auto; padding: 4px 28px 4px 10px; font-size: 13px;">
-                            <option value="6 tháng" selected>6 tháng</option>
-                            <option value="7 tháng">7 tháng</option>
-                            <option value="5 tháng">5 tháng</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="history-grid">
-                    <div class="form-group">
-                        <label for="ky1" style="font-weight: normal;">1 kỳ gần nhất</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="ky1" class="form-control" value="2" min="0" step="any" style="padding-right: 45px;">
-                            <span class="unit">m³</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ky2" style="font-weight: normal;">2 kỳ gần nhất</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="ky2" class="form-control" value="4" min="0" step="any" style="padding-right: 45px;">
-                            <span class="unit">m³</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ky3" style="font-weight: normal;">3 kỳ gần nhất</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="ky3" class="form-control" value="3" min="0" step="any" style="padding-right: 45px;">
-                            <span class="unit">m³</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="mucGiamChay">Mức giảm chảy (%):</label>
+                <input type="number" id="mucGiamChay" class="form-control" value="10" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="soTienThanhToan">Số tiền thanh toán (đồng):</label>
+                <input type="text" id="soTienThanhToan" class="form-control" value="1.129.822">
+            </div>
+
+            <div class="form-group">
+                <label for="chuKy">Chu kỳ tiêu thụ lịch sử:</label>
+                <select id="chuKy" class="form-control">
+                    <option value="6 tháng" selected>6 tháng</option>
+                    <option value="7 tháng">7 tháng</option>
+                    <option value="5 tháng">5 tháng</option>
+                </select>
             </div>
         </div>
 
-        <!-- KẾT QUẢ TÍNH TOÁN -->
-        <div class="section">
-            <div class="section-title">
-                <span>2. Kết quả tính toán</span>
+        <!-- SẢN LƯỢNG TIÊU THỤ LỊCH SỬ -->
+        <div class="grid-3">
+            <div class="form-group">
+                <label for="ky1">Sản lượng 1 kỳ (m³):</label>
+                <input type="number" id="ky1" class="form-control" value="2" step="any">
             </div>
-
-            <div class="result-card">
-                <div class="result-row">
-                    <span class="result-label">Mức bình quân tiêu thụ:</span>
-                    <span class="result-value" id="resMucBinhQuan">0 m³</span>
-                </div>
-                <div class="result-row">
-                    <span class="result-label">Tỷ lệ % tăng bất thường:</span>
-                    <span class="result-value" id="resTyLeTang">0 %</span>
-                </div>
-                <div class="result-row">
-                    <span class="result-label">Sản lượng nước chia sẻ (giảm):</span>
-                    <span class="result-value" id="resSanLuongChiaSe">0 m³</span>
-                </div>
-                <div class="result-row">
-                    <span class="result-label">Đơn giá bình quân:</span>
-                    <span class="result-value" id="resDonGia">0 đồng/m³</span>
-                </div>
+            <div class="form-group">
+                <label for="ky2">Sản lượng 2 kỳ (m³):</label>
+                <input type="number" id="ky2" class="form-control" value="4" step="any">
             </div>
-
-            <div class="highlight-box">
-                <div class="highlight-row">
-                    <span class="highlight-label">Sản lượng nước thanh toán:</span>
-                    <span class="highlight-value" id="resSanLuongThanhToan">0 m³</span>
-                </div>
-                <div class="highlight-row" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #86efac;">
-                    <span class="highlight-label" style="font-size: 16px;">Số tiền khách hàng phải thanh toán:</span>
-                    <span class="highlight-value" style="font-size: 22px; color: #166534;" id="resSoTienThanhToan">0 đồng</span>
-                </div>
+            <div class="form-group">
+                <label for="ky3">Sản lượng 3 kỳ (m³):</label>
+                <input type="number" id="ky3" class="form-control" value="3" step="any">
             </div>
         </div>
 
-        <div class="footer-note">
-            * Công thức được lập trình chính xác theo file Excel "Tính toán giảm chảy 2026 fn.xlsx".
+        <!-- BUTTON -->
+        <button type="button" class="btn-calc" onclick="calculateChiaSe()">Tính Toán Chia Sẻ Giảm Chảy</button>
+
+        <!-- II. KẾT QUẢ TÍNH TOÁN -->
+        <div class="section-box">
+            <div class="section-title">II. KẾT QUẢ TÍNH TOÁN</div>
+        </div>
+
+        <div class="result-group">
+            <div class="result-row-sub">
+                <span>Mức bình quân tiêu thụ:</span>
+                <span class="val" id="resMucBinhQuan">3.00 m³</span>
+            </div>
+            <div class="result-row-sub">
+                <span>Tỷ lệ % tăng bất thường:</span>
+                <span class="val" id="resTyLeTang">39.67 %</span>
+            </div>
+            <div class="result-row-sub">
+                <span>Sản lượng nước chia sẻ:</span>
+                <span class="val" id="resSanLuongChiaSe">11.90 m³</span>
+            </div>
+            <div class="result-row-sub">
+                <span>Đơn giá nước bình quân:</span>
+                <span class="val" id="resDonGia">8.369 đồng/m³</span>
+            </div>
+
+            <div class="result-container" style="margin-top: 6px;">
+                <span class="result-label">Sản lượng nước thanh toán:</span>
+                <span class="result-value" id="resSanLuongThanhToan">123.10 m³</span>
+            </div>
+
+            <div class="result-main">
+                <span class="result-label">Số tiền khách hàng phải thanh toán:</span>
+                <span class="result-value" id="resSoTienThanhToan">1.030.230 đồng</span>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Utility for formatting numbers
     function formatNumber(num, decimals = 2) {
         if (isNaN(num) || !isFinite(num)) return "0";
         return new Intl.NumberFormat('vi-VN', {
@@ -358,53 +313,34 @@
 
     function parseMoneyInput(valStr) {
         if (!valStr) return 0;
-        // Remove all non-digit characters except decimal point or comma if needed
         const cleanStr = valStr.toString().replace(/[^0-9]/g, '');
         return parseFloat(cleanStr) || 0;
     }
 
-    // Format currency input while typing
     const moneyInput = document.getElementById('soTienThanhToan');
-    moneyInput.addEventListener('input', function(e) {
+    moneyInput.addEventListener('input', function() {
         let value = parseMoneyInput(this.value);
         if (value === 0 && this.value === '') {
             this.value = '';
         } else {
             this.value = new Intl.NumberFormat('vi-VN').format(value);
         }
-        calculate();
+        calculateChiaSe();
     });
 
-    // Elements
-    const luongNuocChayEl = document.getElementById('luongNuocChay');
-    const mucGiamChayEl = document.getElementById('mucGiamChay');
-    const chuKyEl = document.getElementById('chuKy');
-    const ky1El = document.getElementById('ky1');
-    const ky2El = document.getElementById('ky2');
-    const ky3El = document.getElementById('ky3');
+    function calculateChiaSe() {
+        const D4 = parseFloat(document.getElementById('luongNuocChay').value) || 0;
+        const D5 = (parseFloat(document.getElementById('mucGiamChay').value) || 0) / 100;
+        const D6 = parseMoneyInput(document.getElementById('soTienThanhToan').value);
+        const E7 = document.getElementById('chuKy').value;
 
-    // Output Elements
-    const resMucBinhQuanEl = document.getElementById('resMucBinhQuan');
-    const resTyLeTangEl = document.getElementById('resTyLeTang');
-    const resSanLuongChiaSeEl = document.getElementById('resSanLuongChiaSe');
-    const resDonGiaEl = document.getElementById('resDonGia');
-    const resSanLuongThanhToanEl = document.getElementById('resSanLuongThanhToan');
-    const resSoTienThanhToanEl = document.getElementById('resSoTienThanhToan');
-
-    function calculate() {
-        const D4 = parseFloat(luongNuocChayEl.value) || 0; // Lượng nước chảy
-        const D5 = (parseFloat(mucGiamChayEl.value) || 0) / 100; // Mức giảm chảy (chuyển từ % sang thập phân)
-        const D6 = parseMoneyInput(moneyInput.value); // Số tiền thanh toán
-        const E7 = chuKyEl.value; // Chu kỳ
-
-        const D8 = parseFloat(ky1El.value) || 0;
-        const D9 = parseFloat(ky2El.value) || 0;
-        const D10 = parseFloat(ky3El.value) || 0;
+        const D8 = parseFloat(document.getElementById('ky1').value) || 0;
+        const D9 = parseFloat(document.getElementById('ky2').value) || 0;
+        const D10 = parseFloat(document.getElementById('ky3').value) || 0;
 
         const sumKy = D8 + D9 + D10;
 
         // D13: Mức bình quân tiêu thụ (m3)
-        // =IF($E$7="6 tháng",SUM($D$8:$E$10)/3,IF($E$7="7 tháng",SUM($D$8:$E$10)/7*2,IF($E$7="5 tháng",SUM($D$8:$E$10)/5*2)))
         let D13 = 0;
         if (E7 === "6 tháng") {
             D13 = sumKy / 3;
@@ -415,7 +351,6 @@
         }
 
         // D14: Tỷ lệ % tăng bất thường (%)
-        // =IF($D$13>=16,(D4-D13)/D13,(D4-16)/3)
         let D14 = 0;
         if (D13 >= 16) {
             D14 = D13 !== 0 ? (D4 - D13) / D13 : 0;
@@ -424,7 +359,6 @@
         }
 
         // D15: Sản lượng nước chia sẻ (m3)
-        // =IF($D$13>=16,($D$4-$D$13)*$D$5,($D$4-16)*$D$5)
         let D15 = 0;
         if (D13 >= 16) {
             D15 = (D4 - D13) * D5;
@@ -433,34 +367,24 @@
         }
 
         // D16: Đơn giá (đồng)
-        // =$D$6/$D$4
         let D16 = D4 !== 0 ? D6 / D4 : 0;
 
         // D18: Sản lượng nước thanh toán (m3)
-        // =D4-D15
         let D18 = D4 - D15;
 
         // D19: Số tiền phải thanh toán (đồng)
-        // =D18*D16
         let D19 = D18 * D16;
 
-        // Update UI
-        resMucBinhQuanEl.innerText = formatNumber(D13, 2) + " m³";
-        resTyLeTangEl.innerText = formatNumber(D14 * 100, 2) + " %";
-        resSanLuongChiaSeEl.innerText = formatNumber(D15, 2) + " m³";
-        resDonGiaEl.innerText = formatNumber(D16, 2) + " đồng/m³";
-        resSanLuongThanhToanEl.innerText = formatNumber(D18, 2) + " m³";
-        resSoTienThanhToanEl.innerText = formatNumber(D19, 0) + " đồng";
+        // Cập nhật giao diện
+        document.getElementById('resMucBinhQuan').innerText = formatNumber(D13, 2) + " m³";
+        document.getElementById('resTyLeTang').innerText = formatNumber(D14 * 100, 2) + " %";
+        document.getElementById('resSanLuongChiaSe').innerText = formatNumber(D15, 2) + " m³";
+        document.getElementById('resDonGia').innerText = formatNumber(D16, 2) + " đồng/m³";
+        document.getElementById('resSanLuongThanhToan').innerText = formatNumber(D18, 2) + " m³";
+        document.getElementById('resSoTienThanhToan').innerText = formatNumber(D19, 0) + " đồng";
     }
 
-    // Attach event listeners
-    [luongNuocChayEl, mucGiamChayEl, chuKyEl, ky1El, ky2El, ky3El].forEach(element => {
-        element.addEventListener('input', calculate);
-        element.addEventListener('change', calculate);
-    });
-
-    // Initial calculation on load
-    calculate();
+    window.onload = calculateChiaSe;
 </script>
 
 </body>
