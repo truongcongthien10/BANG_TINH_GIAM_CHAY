@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bảng Tính Giảm Chảy Cho Khách Hàng - Mobile 2 Cột</title>
     <style>
+        :root {
+            /* Tone màu shade vàng rất nhạt và dịu mắt khi chọn ô */
+            --focus-yellow-bg: #fffde6;
+            --focus-yellow-border: #e6b800;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -96,23 +102,36 @@
             line-height: 1.2;
         }
 
+        /* Xóa nút tăng giảm số */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
         .form-control {
             width: 100%;
             height: 38px;
             padding: 6px 8px;
-            font-size: 15px; /* Giảm nhẹ font để hợp giao diện 2 cột trên màn hình nhỏ */
+            font-size: 15px;
             font-weight: 700;
             color: #111111;
             background-color: #fafafa;
             border: 1px solid #cccccc;
             border-radius: 6px;
             outline: none;
-            transition: border-color 0.2s, background-color 0.2s;
+            transition: all 0.2s ease-in-out;
         }
 
+        /* Chỉ khi người dùng chọn ô (:focus) mới shade màu vàng nhạt và nổi nhẹ */
         .form-control:focus {
-            border-color: #26713c;
-            background-color: #ffffff;
+            background-color: var(--focus-yellow-bg);
+            border-color: var(--focus-yellow-border);
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 3px rgba(255, 235, 130, 0.45), 0 3px 8px rgba(0,0,0,0.1);
         }
 
         select.form-control {
@@ -126,7 +145,7 @@
             padding-right: 26px;
         }
 
-        /* Nút bấm 3D nổi bật với hiệu ứng hover / active */
+        /* Nút bấm 3D nổi bật */
         .btn-calc {
             width: 100%;
             height: 46px;
@@ -147,14 +166,12 @@
             top: 0;
         }
 
-        /* Hiệu ứng đưa tay / rê chuột vào nút (Hover) */
         .btn-calc:hover {
             background: linear-gradient(135deg, #3884d0 0%, #256bb3 100%);
             box-shadow: 0 6px 0 #153c65, 0 8px 15px rgba(43, 116, 187, 0.4);
             top: -2px;
         }
 
-        /* Hiệu ứng nhấn xuống 3D (Active / Click) */
         .btn-calc:active {
             top: 2px;
             box-shadow: 0 2px 0 #153c65, 0 3px 6px rgba(0, 0, 0, 0.2);
@@ -185,7 +202,6 @@
             font-size: 14.5px;
         }
 
-        /* Khung nổi bật sản lượng nước thanh toán */
         .result-container {
             background-color: #ebf3eb;
             border: 1px solid #cce2cc;
@@ -210,7 +226,6 @@
             color: #26713c;
         }
 
-        /* Khung nổi bật Số tiền phải thanh toán - TÔ ĐỎ NỔI BẬT (Đã tối ưu không xuống dòng) */
         .result-main {
             background-color: #fdf2f2;
             border: 1px solid #f8d7da;
@@ -256,22 +271,22 @@
         <div class="form-grid">
             <div class="form-group">
                 <label for="luongNuocChay">Lượng nước chảy (m³):</label>
-                <input type="number" id="luongNuocChay" class="form-control auto-select" value="135" inputmode="decimal" step="any">
+                <input type="number" id="luongNuocChay" class="form-control auto-select" value="135" inputmode="decimal" step="any" onchange="calculateChiaSe()">
             </div>
 
             <div class="form-group">
                 <label for="mucGiamChay">Mức giảm chảy (%):</label>
-                <input type="number" id="mucGiamChay" class="form-control auto-select" value="10" inputmode="decimal" step="any">
+                <input type="number" id="mucGiamChay" class="form-control auto-select" value="10" inputmode="decimal" step="any" onchange="calculateChiaSe()">
             </div>
 
             <div class="form-group full-width">
                 <label for="soTienThanhToan">Số tiền thanh toán (đồng):</label>
-                <input type="text" id="soTienThanhToan" class="form-control auto-select" value="1.129.822" inputmode="numeric">
+                <input type="text" id="soTienThanhToan" class="form-control auto-select" value="1.129.822" inputmode="numeric" onchange="calculateChiaSe()">
             </div>
 
             <div class="form-group full-width">
                 <label for="chuKy">Chu kỳ tiêu thụ lịch sử:</label>
-                <select id="chuKy" class="form-control" >
+                <select id="chuKy" class="form-control" onchange="calculateChiaSe()">
                     <option value="6 tháng" selected>6 tháng</option>
                     <option value="7 tháng">7 tháng</option>
                     <option value="5 tháng">5 tháng</option>
@@ -280,17 +295,17 @@
 
             <div class="form-group">
                 <label for="ky1">Sản lượng 1 kỳ (m³):</label>
-                <input type="number" id="ky1" class="form-control auto-select" value="2" inputmode="decimal" step="any">
+                <input type="number" id="ky1" class="form-control auto-select" value="2" inputmode="decimal" step="any" onchange="calculateChiaSe()">
             </div>
 
             <div class="form-group">
                 <label for="ky2">Sản lượng 2 kỳ (m³):</label>
-                <input type="number" id="ky2" class="form-control auto-select" value="4" inputmode="decimal" step="any">
+                <input type="number" id="ky2" class="form-control auto-select" value="4" inputmode="decimal" step="any" onchange="calculateChiaSe()">
             </div>
 
             <div class="form-group full-width">
                 <label for="ky3">Sản lượng 3 kỳ (m³):</label>
-                <input type="number" id="ky3" class="form-control auto-select" value="3" inputmode="decimal" step="any">
+                <input type="number" id="ky3" class="form-control auto-select" value="3" inputmode="decimal" step="any" onchange="calculateChiaSe()">
             </div>
         </div>
 
@@ -325,7 +340,6 @@
                 <span class="result-value" id="resSanLuongThanhToan">123,1 m³</span>
             </div>
 
-            <!-- NỔI BẬT TÔ ĐỎ SỐ TIỀN KHÁCH HÀNG PHẢI THANH TOÁN -->
             <div class="result-main">
                 <span class="result-label-red">Số tiền KH phải thanh toán:</span>
                 <span class="result-value-red" id="resSoTienThanhToan">1.030.230 đồng</span>
@@ -393,7 +407,6 @@
 
         const sumKy = D8 + D9 + D10;
 
-        // D13: Mức bình quân tiêu thụ (m3)
         let D13 = 0;
         if (E7 === "6 tháng") {
             D13 = sumKy / 3;
@@ -403,7 +416,6 @@
             D13 = (sumKy / 5) * 2;
         }
 
-        // D14: Tỷ lệ % tăng bất thường (%)
         let D14 = 0;
         if (D13 >= 16) {
             D14 = D13 !== 0 ? ((D4 - D13) / D13) : 0;
@@ -411,7 +423,6 @@
             D14 = (D4 - 16) / 3;
         }
 
-        // D15: Sản lượng nước chia sẻ (m3)
         let D15 = 0;
         if (D13 >= 16) {
             D15 = (D4 - D13) * D5;
@@ -419,16 +430,10 @@
             D15 = (D4 - 16) * D5;
         }
 
-        // D16: Đơn giá (đồng)
         let D16 = D4 !== 0 ? D6 / D4 : 0;
-
-        // D18: Sản lượng nước thanh toán (m3)
         let D18 = D4 - D15;
-
-        // D19: Số tiền phải thanh toán (đồng)
         let D19 = D18 * D16;
 
-        // Cập nhật giao diện
         document.getElementById('resMucBinhQuan').innerText = formatNumberVi(D13, 2) + " m³";
         document.getElementById('resTyLeTang').innerText = formatNumberVi(D14, 2) + " %";
         document.getElementById('resSanLuongChiaSe').innerText = formatNumberVi(D15, 2) + " m³";
